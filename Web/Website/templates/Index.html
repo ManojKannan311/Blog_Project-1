@@ -1,0 +1,120 @@
+{% extends 'Base.html' %}
+{% block Headers %}
+
+<meta charset="UTF-8">
+<meta name="description" content="Learn New Technology and Be Updated ">
+<meta name="keywords" content="AI,MI,robotics,automation,VR,virtual enviroment">
+<meta name="robats" , content= "noimageindex"/>
+<meta name="robats" , content="noachive" />
+<meta name="robats" ,content="index,follow"> 
+<meta name="googlebot" content="index, follow">
+<meta name="robats" content="notranslate" />
+
+<!-- Open Graph Meta Tags -->
+<meta name="og.title" content="Technology Bloges" />
+<meta name="og.description" content="Learn New Technology and Be Updated" />
+<meta name="og.site_name" content ="Blog Web Site" /> 
+<meta name="og.url" content="http://127.0.0.1:8001/">
+
+
+    <style>
+        
+        @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Allura&family=Kaushan+Script&display=swap');
+
+
+        h2{
+           font-size: 100px;
+           /* font-family: 'Allura', cursive; */
+            font-family: 'Kaushan Script', cursive;
+            
+        }
+        
+        #a{
+            text-decoration: none;
+            color: whitesmoke;
+            
+        }
+        #a:hover{
+            transition: 2s;
+            color:rgba(235, 52, 97, 0.822);
+        }
+        .card {
+        border-top-right-radius: 30px;
+        border-bottom-left-radius: 30px;
+        box-shadow: 5px 5px 5px 0px;
+
+    }
+    #CImg{
+        box-sizing: border-box;
+        overflow: hidden;
+        height: 50%;
+        width: 100%;
+        padding: 20px;
+        border-radius: 10px;
+    }
+    a{
+        text-decoration: none;
+    }
+    #content{
+           overflow: hidden; height:100px;
+           /* text-overflow: ellipsis; */
+           font-weight: 500;
+           color: rgb(182, 179, 179);
+    }
+    #h2{
+        font-size: 40px;
+      
+    }
+    </style>
+{% endblock  %}
+{% block content %}
+    <div class="container">
+        <div class="row">
+            <div class="col-md-12">
+                <h2 class="">
+                    Technology is best <br> when it brings people <br> together...
+                </h2>
+                <div class="mt-4">
+                    <a id="a" class="fs-3" href="{% url 'Bloglist' %}">Read Blogs <i class="fa fa-arrow-right"></i></a>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!-- <hr style="color:white"> -->
+    <!-- Trending Blogs -->
+    <div class="container">
+        <div class="row mt-5">
+            <div class="col-lg-12">
+                <h2 id="h2"class="mt-5"> Trending Blog's</h2>
+            </div>
+        </div>
+        
+        <div class="row mt-3">
+            {% for i in data %}
+            <div class="col-lg-4 mt-5 ">
+                <div class="card" style="width: 18rem;height: 25rem;">
+                    <img src="{{i.Image}}" id="CImg" class="card-img-top" alt="Ai image">
+                    <a href="{% url 'Blog' i.Slug %}">
+                       
+                        <div class="card-body">
+                            <h5 class="card-title text-dark">{{i.Title}}</h5>
+                            <p id="content" class="card-text text-dark">{{i.Content |striptags}}</p>
+                            <a href="{% url 'Blog' i.Slug  %}
+                            ">Read More..</a>
+                        </div>
+                    </a>
+                </div>
+            </div>
+            {% endfor %}
+    
+    
+    
+        </div>
+    </div>
+<script>
+    
+</script>
+{% endblock  %}
+ 

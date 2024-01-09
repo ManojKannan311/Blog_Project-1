@@ -1,0 +1,152 @@
+
+{% extends 'Base.html' %}
+{% load static %}
+{% block Headers %}
+{% for i in data %}
+<meta charset="UTF-8">
+<meta name="title"  content="{{i.Title}}"  />
+<meta name="description" content="{{i.description}}">
+<meta name="keywords" content="{{i.Key_Word}}">
+<meta name="robats" , content="noimageindex" />
+<meta name="robats" , content="noachive" />
+<meta name="robats" ,content="index,follow">
+<meta name="googlebot" content="index, follow">
+<meta name="robats" content="notranslate" />
+
+<!-- Open Graph Meta Tags -->
+<meta name="og.title" content="{{i.Title}}" />
+<meta name="og.description" content="{{i.description}}" />
+<meta name="og.site_name" content="Blog Web Site" />
+<meta name="og.url" content=
+    content="http://127.0.0.1:8001/Blogs/The%20Role%20of%20AI%20in%20Transforming%20Industries%20content">
+{% endfor %}
+<style>
+        @import url('https://fonts.googleapis.com/css2?family=Kaushan+Script&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Rancho&display=swap');
+        @import url('https://fonts.googleapis.com/css2?family=Allura&family=Kaushan+Script&display=swap');
+    #alt {
+        text-align: justify;
+        background-color: transparent;
+
+    }
+    #btn ,#btnn{
+        font-family: 'Kaushan Script', cursive;
+        
+    }
+    #btnn{
+        font-size: 35px;
+    }
+
+    #back {
+        text-decoration: underline;
+        color: black;
+        font-weight: 600;
+    }
+
+    #back:hover {
+        color: whitesmoke;
+        transition: 10ms;
+    }
+    #Cate{
+        font-weight: 600;
+    }
+    #content{
+        font-weight: 600;
+    }
+</style>
+
+{% endblock %}
+{% block content %}
+<div class="container">
+    <div class="row">
+        <!-- <div class="col-lg-2"></div> -->
+        <div>
+            <a id="back" href="{% url 'Bloglist' %}">Back To Blog's</a>
+        </div>
+        <div class="col-lg-10">
+            {% for i in data %}
+            <div>
+                <h1 class="mt-3 mb-3">{{i.Title}}</h1>
+            </div>
+            <div>
+                <p id="content">Date Posted : <span clas="fs-bold"> {{i.Create_Time}}</span></p>
+            </div>
+            <div>
+                <p id="Cate">Category : <span class="fw-bold">{{i.Category_Name}}</span></p>
+            </div>
+            <div class="mt-5" class="safe"
+                style=" font-size: 1.3rem;border-radius: 5px; margin-top: 1.5rem; border: solid 1px #eaeaea; padding: 2rem; background-color: #efefff;text-align: justify;">
+                <p id="alt" class="fs-4">{{i.Content|safe }}</p>
+            </div>
+            <!-- striptags|safe -->
+            <!-- <button id="btn" class="btn btn-info mt-4 mb-3" onclick='gets("{{i.Category}}")'>Click</button> -->
+            {% endfor %}
+        </div>
+
+    </div>
+    <hr style="color: white;">
+  
+    
+</div>
+<div class="container-fluid">
+    <div class="row" id="contentContainer">
+        <h3 class="text-center" id="btnn">Related Blog's</h3>
+        <div class="text-center">
+            {% for i in data %}
+            <a id="btn" style="width:220px;" class="btn btn-info mt-4 mb-3" onclick='gets("{{i.Category}}")'>View Blogs <i class="fa fa-arrow-down"></i></a>
+            {% endfor %}
+        </div>
+        <!-- Ajax Content Display for Category  -->
+    </div>
+
+</div>
+
+<script>
+    $(document).ready(function () {
+
+    })
+    function gets(name) {
+        console.log(name)
+
+        $('#btn').toggle()
+        // prop('disabled', true);
+        $.ajax({
+            type: "GET",
+            url: "http://127.0.0.1:8001/relatedCategory/" + name,
+            dataType: "json",
+            success: function (result) {
+
+                var contentContainer = $('#contentContainer');
+
+                $.each(result, function (index, item) {
+                    var one = $("<div>"+ item.Category_Name+"</div>")
+                    var main = $('<div class="col-lg-4"></div>')
+                    var card = $('<div class="card custom-card"style="width: 250px;height: 300px;border-top-right-radius: 20px; border-bottom-left-radius: 20px;box-shadow: 5px 5px 5px 0px;margin:20px;"></div>');
+                    var img = $('<img src="' + item.Image + '" id="CImg" class="card-img-top" style="box-sizing: border-box; overflow: hidden;height: 50%; border-top-right-radius: 30px;border-radius:15px; width: 100%; padding-top: 10px;border-radius: 10px;" alt="Ai image">');
+                    var cardBody = $('<div class="card-body"></div>');
+                    var title = $('<h5 class="card-title text-dark">' + item.Title + '</h5>');
+                    var content = $('<p id="content" style="overflow:hidden; box-sizing: border-box;height:100px;font-weight:500;" class="card-text text-dark">' + item.Content|self + '</p>');
+                    var readMoreLink = $('<a href="/Blogs/'+ item.Slug +' " style="font-weight:400;">Read More..</a>').css("font-weigth","600")
+                    console.log(item.Slug)
+
+                    cardBody.append(title);
+                    cardBody.append(content)
+                    cardBody.append(readMoreLink);
+
+                    card.append(img);
+                    card.append(cardBody);
+
+                    main.append(card)
+                    one.append(main)
+                    contentContainer.append(card);
+                });
+            }
+        });
+
+    }
+
+
+</script>
+
+
+{% endblock %}

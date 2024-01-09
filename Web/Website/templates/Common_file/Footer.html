@@ -1,0 +1,29 @@
+{% load static %}
+<style>
+ #i{
+    margin: 15px;
+    font-size: 26px;
+    color: black;
+ }
+
+
+</style>
+<hr class="mt-5">
+<div class="container" id="container">
+    <div class="row">
+        <div class="col-lg-4">
+            <img src="{% static 'edited.png' %}" alt="">
+            <div id="icon">
+                <a  href=""><i id="i" class="fa fa-twitter"></i></a>
+                <a  href=""><i id="i" class="fa fa-facebook"></i></a>
+                <a  href=""><i id="i" class="fa fa-instagram"></i></a>
+                <a  href=""><i id="i" class="fa fa-envelope"></i></a>
+                <a  href=""><i id="i" class="fa fa-git"></i></a>
+                <h6><a href="{% url 'CreateBlog' %}" class="text-dark" style="text-decoration: none;"> Admin Login</a></h6>    
+            </div>
+        </div>
+        <div class="col-lg-8">
+            
+        </div>
+    </div>
+</div>
